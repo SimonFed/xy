@@ -24,7 +24,7 @@ app.listen(3000);
  * Маршруты
  */
 app.get("/", async (req, res) => {
-    const items = await prisma.item.findMany({
+    const items = await prisma.items.findMany({
         include: {
             location: true,
         }
