@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "mysql"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Items {
+model items {
         id          Int       @id @default(autoincrement())
         title       String    @db.VarChar(255)
         image       String    @db.VarChar(255)
@@ -20,6 +20,8 @@ model Items {
         location    Location  @relation(fields: [location_id], references: [id])
         location_id Int
         categories  ItemRelCategory[]
+    
+    @@map("items")
     }
 
     model Location {
@@ -29,7 +31,7 @@ model Items {
         created_at  DateTime @default(now())
         updated_at  DateTime @default(now())
 
-        items Items[]
+        items items[]
 
         @@map("locations")
     }
@@ -46,7 +48,7 @@ model Items {
     }
 
     model ItemRelCategory {
-        items        Items @relation(fields: [items_id], references: [id])
+        items        items @relation(fields: [items_id], references: [id])
         items_id     Int
         category    Category @relation(fields: [category_id], references: [id])
         category_id Int

@@ -38,7 +38,7 @@ app.get("/", async (req, res) => {
 app.get("/items/:id", async (req, res) => {
     const { id } = req.params;
 
-    const item = await prisma.item.findFirst({
+    const item = await prisma.items.findFirst({
         where: {
             id: Number(id),
         },
@@ -51,22 +51,23 @@ app.get("/items/:id", async (req, res) => {
             },
         }
     });
-
+console.log(item);
     res.render("item", {
         item: (item) ? item : {},
     });
 });
 
 app.post("/store", async (req, res) => {
-    const { title, image } = req.body;
-
-    await prisma.item.create({
+    const { title, image} = req.body;
+    const location_id = Number(req.body.location)
+    console.log(location_id)
+    await prisma.items.create({
         data: {
             title,
             image,
+            location_id
         }
     });
-
     res.redirect("/");
 });
 
@@ -81,10 +82,10 @@ app.get('/example-m-n', async (req, res) => {
     res.redirect("/");
 });
 
-app.get("/add", async(req, res) => {
-    const location = await prisma.location.findMany()
-    console.log(location)
+app.get("/add", async (req, res) => {
+    const locations = await prisma.location.findMany()
+    console.log(locations)
     res.render("add", {
-        'location': location
+        'locations': locations,
     });
 });

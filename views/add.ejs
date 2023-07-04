@@ -13,7 +13,9 @@
         <input class="form-group__input" type="text" id="image" name="image" placeholder="image">
     </div>
     <select name="location">
-        <% for(let i = 0; i<  ) %>
+        <% for(let i = 0; i < locations.length; i++){%>
+            <option value="<%=locations[i].id%>"><%=locations[i].title%></option>
+        <%}%>
     </select>
 
     <input class="form-button" type="submit" value="Создать">
