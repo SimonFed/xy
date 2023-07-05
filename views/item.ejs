@@ -8,6 +8,9 @@
     </h2>
     <img class="section__image" src="/img/<%= item.image %>">
     <h3><%= item.location.title %></h3>
+    <% if (item.categories.length > 0) { %>
+        <h3><%= item.categories[0].category.title %></h3>
+    <% } %>
 </div>
 
 <form action="/update" method="post">
@@ -23,7 +26,24 @@
             placeholder="image">
     </div>
 
+    <input type="hidden" name="id" value="<%= item.id %>">
+
     <input class="form-button" type="submit" value="Обновить">
+</form>
+
+<form action="/add-cat" method="post">
+    <div class="form-group">
+        <label class="form-group__label" for="cat_id">image</label>
+        <select name="cat_id" id="cat_id">
+            <% for (let i = 0; i < category.length; i++) { %>
+                <option value="<%= category[i].id %>"><%= category[i].title %></option>
+            <% } %>            
+        </select>
+    </div>
+
+    <input type="hidden" name="id" value="<%= item.id %>">
+
+    <input class="form-button" type="submit" value="добавить категорию">
 </form>
 
 <%- include('particles/footer.ejs') %>
