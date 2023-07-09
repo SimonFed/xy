@@ -1,3 +1,5 @@
+const host = 8340;
+
 const path = require("path");
 const express = require("express");
 const { PrismaClient } = require('@prisma/client');
@@ -20,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Запуск веб-сервера по адресу http://localhost:3000
-app.listen(3000);
+app.listen(host);
 
 /**
  * Маршруты
@@ -100,14 +102,13 @@ app.get('/new_cat',(req, res) => {
 })
 
 app.post("/cat_new", async (req, res) => {
-    const{title, description} =req.body;
+    const{title} =req.body;
     await prisma.category.create({
         data: {
-            title,
-            description
+            title
         }
     });
-    res.redirect("/");
+    res.redirect("/"); 
 })
 app.post("/update", async (req, res) => {
     const { id, title, image } = req.body;
@@ -151,4 +152,19 @@ app.post("/delete", async (req, res) => {
     })
     
     res.redirect("/");
+})
+
+app.post("/local_new", async (req, res) => {
+    const{title, description} =req.body;
+    await prisma.location.create({
+        data: {
+            title,
+            description
+        }
+    });
+    res.redirect("/");
+})
+
+app.get('/new_local',(req, res) => {
+    res.render('new_local')
 })
